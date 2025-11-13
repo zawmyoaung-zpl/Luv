@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ချစ်သူအတွက် စာတစ်ဆောင်</title>
+
+  <style>
+    body {
+      margin: 0; 
+      padding-top: 50px; /* 50px မှ စတင်သည် */
+      font-family: "Noto Sans Myanmar", sans-serif; /* Font ကို ပြောင်းလဲ */
+      /* Image 013.png ကို ကိုယ်ပိုင်ပုံနဲ့ အစားထိုးပါ */
+      background-image: url('photo/013.png'); 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      text-align: center;
+    }
+     .A {
+      padding: 2px;
+      font-size: 2em;
+      border: 2px;
+      border-radius: 5px;
+      color: #ffff;
+    }
+    .C { color: white;}
+     
+    .heart-icon {
+        color: #ff4d6d;
+        font-size: 3em;
+        animation: heartbeat .8s infinite ease-in-out; 
+        display: block;
+        margin: 20px auto;
+        text-shadow: 0 0 10px #ff4d6d;
+        text-decoration: none;
+    }
+    /* === Heartbeat Animation ကို ပိုချောမွေ့အောင် ပြောင်းလဲ === */
+    @keyframes heartbeat {
+      0% { transform: scale(1); opacity: 1; } 
+      50% { transform: scale(1.2); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  
+  <p class="A">ချစ်အတွက် စာတစ်ဆောင်</p>
+  <p class="C">press to enter</p>
+  <p class="B">
+      <a href="My Project.html" class="heart-icon"><span>🧡</span></a>
+  </p>
+  
+</body>
+</html>
