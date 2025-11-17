@@ -14,7 +14,7 @@
       padding:20px;
       font-family: "Noto Sans Myanmar", sans-serif;
       color: black;
-      background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url('012.jpg');
+      background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url('photo/012.jpg');
       background-size:cover;
       background-position:center;
       background-repeat:no-repeat;
@@ -22,7 +22,13 @@
       padding:20px;
     }
 
-    
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3em;
+      margin-top:20px;
+      color: #ffcc00;
+      text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+    }
 
     header h2 {
       text-align: center;
@@ -145,9 +151,10 @@
         margin-bottom:1px;">
   🎵 နောက်ခံဂီတ နားဆင်ရန် နှိပ်ပါ 🎵
         </button>
-<audio id="myLoveSong" src="CC.mp3"></audio>
+<audio id="myLoveSong" src="music/CC.mp3"></audio>
 </div>
   <header>
+    <h1>Sweetheart</h1>
     <h2> သို့..ချစ်ရပါသော</h2>
   </header>
   
@@ -202,8 +209,8 @@
             </p>
             </div>
       
-      <img src="012.jpg" class="jpg">
-      <img src="013.jpg" class="jpg">
+      <img src="photo/001.jpg" class="jpg">
+      <img src="photo/012.jpg" class="jpg">
   </section>
   
   
@@ -212,11 +219,11 @@
   <!-- ===== Footer ===== -->
   <footer>
    <p> ချစ်ရသူရဲ့မေတ္တာစကားကိုစောင့်မျှော်လျှက်။</p>
- <p> <a href="index.html" style="text-decoration:none;">ရှေ့မျတ်နှာသို့ ပြန်သွားလိုပါက နှိပ်ပါ</a></p>
+ <p> <a href="a.html" style="text-decoration:none;">ရှေ့မျတ်နှာသို့ ပြန်သွားလိုပါက နှိပ်ပါ</a></p>
   
   </footer>
-
   <script>
+  
     document.getElementById('playButton').addEventListener('click', function() {
         var audio = document.getElementById('myLoveSong');
         var button = this;
@@ -235,46 +242,8 @@
             }); 
     });
             
-    // login alert စစ်ဆေးခြင်း
-    if (!sessionStorage.getItem('loggedInUser')) {
-      alert('ဝင်ရောက်ခွင့် မရှိပါ။ ကျေးဇူးပြု၍ Login ဝင်ပါ။');
-      window.location.href = 'index.html';
-    }
-    
-    // Login ဝင်ထားသူ၏ အမည်ကို ရယူပြီး 'welcomeUser' နေရာတွင် ပြသရန်
-    const loggedInUser = sessionStorage.getItem('loggedInUser');  
-    // Note: သင့် HTML တွင် 'welcomeUser' ID မပါဝင်သော်လည်း error မဖြစ်စေရန် ဤအတိုင်းထားရှိပါသည်။
-    const welcomeUserElement = document.getElementById('welcomeUser');
-    if (welcomeUserElement) {
-        welcomeUserElement.textContent = loggedInUser;
-    }
-    
-    // ပြန်ထွက်မည် (Logout) လုပ်ဆောင်ချက်
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            sessionStorage.removeItem('loggedInUser'); // Session ရှင်း
-            window.location.href = 'index.html'; // Login သို့ ပြန်ပို့
-        });
-        <script>
-  
-    document.getElementById('playButton').addEventListener('click', function() {
-        var audio = document.getElementById('myLoveSong');
-        var button = this;
 
-        // 1. သီချင်းကို စဖွင့်ရန် ကြိုးစားခြင်း
-        audio.play()
-            .then(() => {
-                // ဖွင့်တာ အောင်မြင်မှသာ ခလုတ်ကို ဖျောက်ပါ
-                button.style.display = 'none';
-            })
-            .catch(error => {
-                // ဖွင့်တာ မအောင်မြင်ရင် (ဥပမာ- Browser က တားရင်)
-                console.error("Audio playback failed:", error);
-                // သတိပေးပြီး ခလုတ်ကို မဖျောက်ဘဲထားပါ (အသုံးပြုသူ နောက်တစ်ကြိမ် နှိပ်ကြည့်နိုင်ရန်)
-                alert("သီချင်းဖွင့်လို့ မရပါ။ Browser setting သို့မဟုတ် ဖိုင်တည်နေရာ စစ်ဆေးပါ။");
-            }); 
-    });
- </script> 
+ </script>
+
 </body>
 </html>
