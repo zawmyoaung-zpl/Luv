@@ -275,30 +275,6 @@
                 alert("သီချင်းဖွင့်လို့ မရပါ။ Browser setting သို့မဟုတ် ဖိုင်တည်နေရာ စစ်ဆေးပါ။");
             }); 
     });
-            
-    // login alert စစ်ဆေးခြင်း
-    if (!sessionStorage.getItem('loggedInUser')) {
-      alert('ဝင်ရောက်ခွင့် မရှိပါ။ ကျေးဇူးပြု၍ Login ဝင်ပါ။');
-      window.location.href = 'index.html';
-    }
-    
-    // Login ဝင်ထားသူ၏ အမည်ကို ရယူပြီး 'welcomeUser' နေရာတွင် ပြသရန်
-    const loggedInUser = sessionStorage.getItem('loggedInUser');  
-    // Note: သင့် HTML တွင် 'welcomeUser' ID မပါဝင်သော်လည်း error မဖြစ်စေရန် ဤအတိုင်းထားရှိပါသည်။
-    const welcomeUserElement = document.getElementById('welcomeUser');
-    if (welcomeUserElement) {
-        welcomeUserElement.textContent = loggedInUser;
-    }
-    
-    // ပြန်ထွက်မည် (Logout) လုပ်ဆောင်ချက်
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            sessionStorage.removeItem('loggedInUser'); // Session ရှင်း
-            window.location.href = 'index.html'; // Login သို့ ပြန်ပို့
-        });
-    }
-
  </script> 
 </body>
 </html>
