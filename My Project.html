@@ -217,41 +217,88 @@
   </footer>
 
   <script>
-  
     document.getElementById('playButton').addEventListener('click', function() {
-            var audio = document.getElementById('myLoveSong');
-            
-            // 2. သီချင်းကို စဖွင့်ခြင်း
-            audio.play().catch(error => {
-                // error ရှိရင် (ဥပမာ- browser က တားမြစ်ထားရင်) console မှာ ပြသပါ
-                console.log("Audio playback failed:", error);
-                alert("သီချင်းဖွင့်လို့ မရပါဘူး။ Browser settings ကို စစ်ဆေးပါ။");
+        var audio = document.getElementById('myLoveSong');
+        var button = this;
+
+        // 1. သီချင်းကို စဖွင့်ရန် ကြိုးစားခြင်း
+        audio.play()
+            .then(() => {
+                // ဖွင့်တာ အောင်မြင်မှသာ ခလုတ်ကို ဖျောက်ပါ
+                button.style.display = 'none';
+            })
+            .catch(error => {
+                // ဖွင့်တာ မအောင်မြင်ရင် (ဥပမာ- Browser က တားရင်)
+                console.error("Audio playback failed:", error);
+                // သတိပေးပြီး ခလုတ်ကို မဖျောက်ဘဲထားပါ (အသုံးပြုသူ နောက်တစ်ကြိမ် နှိပ်ကြည့်နိုင်ရန်)
+                alert("သီချင်းဖွင့်လို့ မရပါ။ Browser setting သို့မဟုတ် ဖိုင်တည်နေရာ စစ်ဆေးပါ။");
             }); 
+    });
             
-            // 3. ခလုတ်ကို ဖျောက်ထားခြင်း
-            this.style.display = 'none';});
-            
-      //login alert
-          if (!sessionStorage.getItem('loggedInUser')) {
-      // မရှိပါက Login မျက်နှာစာသို့ ချက်ချင်း ပြန်ပို့သည်
+    // login alert စစ်ဆေးခြင်း
+    if (!sessionStorage.getItem('loggedInUser')) {
       alert('ဝင်ရောက်ခွင့် မရှိပါ။ ကျေးဇူးပြု၍ Login ဝင်ပါ။');
       window.location.href = 'index.html';
     }
-    // Login ဝင်ထားသူ၏ အမည်ကို ရယူသည်
+    
+    // Login ဝင်ထားသူ၏ အမည်ကို ရယူပြီး 'welcomeUser' နေရာတွင် ပြသရန်
     const loggedInUser = sessionStorage.getItem('loggedInUser');  
-        document.getElementById('welcomeUser').textContent = loggedInUser;
+    // Note: သင့် HTML တွင် 'welcomeUser' ID မပါဝင်သော်လည်း error မဖြစ်စေရန် ဤအတိုင်းထားရှိပါသည်။
+    const welcomeUserElement = document.getElementById('welcomeUser');
+    if (welcomeUserElement) {
+        welcomeUserElement.textContent = loggedInUser;
+    }
     
-    // ======================================
     // ပြန်ထွက်မည် (Logout) လုပ်ဆောင်ချက်
-    // ======================================
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-        sessionStorage.removeItem('loggedInUser'); // Session ကို ရှင်းပစ်သည်
-        window.location.href = 'index.html'; // Login စာမျက်နှာသို့ ပြန်ပို့သည်
-    });
-        document.getElementById('welcomeUser').textContent = loggedInUser;
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('loggedInUser'); // Session ရှင်း
+            window.location.href = 'index.html'; // Login သို့ ပြန်ပို့
+        });
+        <script>
+  
+    document.getElementById('playButton').addEventListener('click', function() {
+        var audio = document.getElementById('myLoveSong');
+        var button = this;
 
+        // 1. သီချင်းကို စဖွင့်ရန် ကြိုးစားခြင်း
+        audio.play()
+            .then(() => {
+                // ဖွင့်တာ အောင်မြင်မှသာ ခလုတ်ကို ဖျောက်ပါ
+                button.style.display = 'none';
+            })
+            .catch(error => {
+                // ဖွင့်တာ မအောင်မြင်ရင် (ဥပမာ- Browser က တားရင်)
+                console.error("Audio playback failed:", error);
+                // သတိပေးပြီး ခလုတ်ကို မဖျောက်ဘဲထားပါ (အသုံးပြုသူ နောက်တစ်ကြိမ် နှိပ်ကြည့်နိုင်ရန်)
+                alert("သီချင်းဖွင့်လို့ မရပါ။ Browser setting သို့မဟုတ် ဖိုင်တည်နေရာ စစ်ဆေးပါ။");
+            }); 
     });
- </script>
+            
+    // login alert စစ်ဆေးခြင်း
+    if (!sessionStorage.getItem('loggedInUser')) {
+      alert('ဝင်ရောက်ခွင့် မရှိပါ။ ကျေးဇူးပြု၍ Login ဝင်ပါ။');
+      window.location.href = 'index.html';
+    }
     
+    // Login ဝင်ထားသူ၏ အမည်ကို ရယူပြီး 'welcomeUser' နေရာတွင် ပြသရန်
+    const loggedInUser = sessionStorage.getItem('loggedInUser');  
+    // Note: သင့် HTML တွင် 'welcomeUser' ID မပါဝင်သော်လည်း error မဖြစ်စေရန် ဤအတိုင်းထားရှိပါသည်။
+    const welcomeUserElement = document.getElementById('welcomeUser');
+    if (welcomeUserElement) {
+        welcomeUserElement.textContent = loggedInUser;
+    }
+    
+    // ပြန်ထွက်မည် (Logout) လုပ်ဆောင်ချက်
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('loggedInUser'); // Session ရှင်း
+            window.location.href = 'index.html'; // Login သို့ ပြန်ပို့
+        });
+    }
+
+ </script> 
 </body>
 </html>
