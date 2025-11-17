@@ -212,7 +212,7 @@
   <!-- ===== Footer ===== -->
   <footer>
    <p> ချစ်ရသူရဲ့မေတ္တာစကားကိုစောင့်မျှော်လျှက်။</p>
- <p> <a href="a.html" style="text-decoration:none;">ရှေ့မျတ်နှာသို့ ပြန်သွားလိုပါက နှိပ်ပါ</a></p>
+ <p> <a href="index.html" style="text-decoration:none;">ရှေ့မျတ်နှာသို့ ပြန်သွားလိုပါက နှိပ်ပါ</a></p>
   
   </footer>
 
@@ -235,7 +235,7 @@
           if (!sessionStorage.getItem('loggedInUser')) {
       // မရှိပါက Login မျက်နှာစာသို့ ချက်ချင်း ပြန်ပို့သည်
       alert('ဝင်ရောက်ခွင့် မရှိပါ။ ကျေးဇူးပြု၍ Login ဝင်ပါ။');
-      window.location.href = 'a.html';
+      window.location.href = 'index.html';
     }
     // Login ဝင်ထားသူ၏ အမည်ကို ရယူသည်
     const loggedInUser = sessionStorage.getItem('loggedInUser');  
@@ -246,7 +246,7 @@
     // ======================================
     document.getElementById('logoutBtn').addEventListener('click', () => {
         sessionStorage.removeItem('loggedInUser'); // Session ကို ရှင်းပစ်သည်
-        window.location.href = 'a.html'; // Login စာမျက်နှာသို့ ပြန်ပို့သည်
+        window.location.href = 'index.html'; // Login စာမျက်နှာသို့ ပြန်ပို့သည်
     });
         document.getElementById('welcomeUser').textContent = loggedInUser;
 
