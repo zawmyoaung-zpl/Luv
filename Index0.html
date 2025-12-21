@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title id="pageTitle">Luv-Letter | Login</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        @font-face {
+            font-family: 'Pyidaungsu';
+            src: url('Pyidaungsu.ttf');
+            format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+            font-size:0.8em;
+        }
+
+        body {
+            margin: 0;
+            font-family: Poppins, 'Pyidaungsu', Arial, sans-serif;
+            text-align:center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .hidden {
+            display: none !important;
+        }
+        #login-page {
+            flex-grow: 1; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e0e5ec;
+        }
+        
+        .card {
+            background: #e0e5ec;
+            padding:10px;
+            border-radius: 20px;
+            box-shadow: 10px 10px 20px #b8bcc2,
+                        -10px -10px 20px #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 260px;
+        }
+        
+        .card h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.5em;
+        }
+
+        .input {
+            padding: 10px 15px;
+            width: 70%;
+            border: none;
+            border-radius: 12px;
+            background: #e0e5ec;
+            box-shadow: inset 5px 5px 10px #b8bcc2, inset -5px -5px 10px #ffffff;
+            outline: none;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }      
+        
+        .button {
+            padding: 10px;
+            border: none;
+            border-radius: 12px;
+            background: #e0e5ec;
+            box-shadow: 5px 5px 10px #b8bcc2,
+                       -5px -5px 10px #ffffff;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-size:1em;
+            font-weight:bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width:30%;
+        }
+
+        .button:hover {
+            background: #0056b3;
+        }
+        
+      .toggle-eye{
+           position:absolute;
+           right:50px;
+           top:50%;
+           transform:translateY(-50%);
+           cursor:pointer;
+           font-size:18px;
+           color:#666;
+          }
+         
+        .msg {
+            color: #b00020;
+            font-size: 14px;
+            min-height: 18px;
+        }
+        
+        .heart-icon {
+            color: #ff4d6d;
+            font-size: 3em;
+            animation: heartbeat 1.2s infinite ease-in-out; 
+            display: block;
+            margin: 20px auto;
+            text-shadow: 0 0 10px #ff4d6d;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(0.9); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(.9); opacity: 1; }
+        }
+
+        /* home page */
+    .navbar {
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(3px);
+        padding: 5px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        z-index: 10; 
+        position: relative;
+    }
+
+        .menu-list {
+            display: flex;
+            gap: 5px;
+            font-size: 1em;
+        }
+        .menu-list a {
+            text-decoration: none;
+            color: gold;
+            text-shadow: 0 0 10px;
+            font-weight: 500;
+            font-size: 0.8em;
+            position: relative;
+            padding: 10px 8px;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+        .menu-list a::after {
+            content: "";
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: cyan;
+            border-radius: 5px;
+            transition: 0.3s ease;
+        }
+
+        .menu-list a:hover::after, .menu-list a.active::after {
+            width: 100%;
+            box-shadow: 0 0 8px cyan;
+        }
+
+        .menu-list a:hover, .menu-list a.active {
+            color: cyan;
+            text-shadow: 0 0 10px cyan;
+        }
+        
+        .btn-logout {
+            background: #ff4d4d;
+            border:none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: white;
+            font-palette: 0.8em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: #ff1a1a;
+            box-shadow: 0 0 10px red;
+        }
+        
+        #main-menu-page {
+            flex-grow: 1;
+            padding-top: 50px;
+            color: #ff6347;
+            position: relative;
+            z-index: 1;
+        }
+  video#bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(50%);
+    }
+        #main-menu-page p {
+            font-size: 1.1em;
+        }
+
+       /*letter page*/
+     
+        #detail-page {
+            font-family:'Pyidaungsu', Arial, sans-serif;
+            background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0)),url('letter.jpg'); 
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+            background-attachment:fixed;
+            padding: 20px;
+            color: black;
+            flex-grow: 1;
+            padding-top: 50px;
+        }
+        
+        #detail-page header h2 {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight:bold;
+            margin: 15px;
+            color: #39ff14;
+        }
+        
+        #detail-page h1 {
+            font-size: 1.2em;
+            margin-top: 5px;
+            color: cyan;
+            text-shadow: 0 0 10px;
+        }
+        
+        #detail-page section p {
+            font-size: 15px;
+            line-height: 35px;
+            text-align: justify;
+        }
+        
+        .year-box {
+            background: rgba(255,255,255,0);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 50px auto;
+            max-width: 600px;
+            box-shadow: 0 0 11px rgba(0,0,0,0.8);
+            color: white; 
+        }
+
+        .year-box h3 {
+            padding-bottom: 13px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid red;
+            color: blue;
+        }
+        
+        .back-link-card {
+            border: 1px solid cyan;
+            margin: 50px auto;
+            border-radius: 10px;
+            background: white;
+            padding: 10px;
+            max-width: 600px;
+        }
+        
+        /* music page */
+        #music-page {
+            font-family:"Noto Sans Myanmar", sans-serif;
+            color: gold;
+            text-shadow: 0 0 10px gold;
+            background: url('00.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            flex-grow: 1;
+            padding-top: 50px;
+        }
+        
+        #music-page .container {
+            width: 300px;
+            height: auto; 
+            min-height: 500px;
+            padding: 15px;
+            background-color: rgba(255,255,255,0);
+            border: 2px solid rgba(255,255,255,0.18);
+            backdrop-filter: blur(0px);
+            border-radius: 15px;
+            box-shadow: 0 0 11px rgba(0, 0, 0, 0.8);
+            margin: 5px auto; 
+            position: relative;
+        }
+
+        .playlistContainer {
+            max-height: 350px;
+            overflow-y: auto; 
+            padding-right: 10px; 
+            margin-bottom: 5px;
+        }
+
+        .trackItem {
+            padding: 5px 5px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-bottom: .5px solid gold;
+            transition: background-color 0.2s;
+            text-align: left;
+            font-size: 0.8em;
+        }
+
+        .activeTrack {
+            color: cyan;
+            font-weight: bold;
+            text-shadow: 0 0 10px cyan;
+            border-bottom: 1px solid cyan;
+        }
+        
+        .currentAndTotlTime {
+            text-align: center;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+            color: cyan;
+            text-shadow: 0 0 10px cyan;
+        }
+        #progressBar {
+            width: 100%;
+            height: 5px;
+            background-color: white;
+            border-radius: 2.5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        #currentProgress {
+            height: 100%;
+            width: 0%; 
+            background-color: cyan;
+            border-radius: 2.5px;
+            box-shadow: 0 0 10px cyan;
+        }
+        .musicPlayer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+            font-size: 1.5em;
+        }
+        .controls {
+            color: white;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .musicPlayer .playButton,
+        .musicPlayer .pauseButton {
+            font-size: 2em; 
+            color: white;
+            text-shadow: 0 0 5px cyan;
+        }
+        .musicPlayer .playButton:hover,
+        .musicPlayer .pauseButton:hover,
+        .musicPlayer .controls:hover {
+            color: cyan;
+            text-shadow: 0 0 15px cyan;
+        }
+        
+        .volumeControl {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        
+        #volumeSlider {
+            width: 130px; 
+            height: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: white; 
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #volumeSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: cyan;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .volumeIcon {
+            font-size: 1.3em;
+            text-shadow: 0 0 15px cyan;
+            color: cyan;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+       /*album page */
+       
+        #album-page {
+            font-family: 'Pyidaungsu', Arial, sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('letter0.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat:no-repeat;
+            background-attachment:fixed;
+            color: gold;
+            padding-top: 50px;
+            flex-grow: 1;
+        }
+        
+        .album-header {
+            color: black;
+            padding-bottom:20px;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom:2px solid cyan;
+        }
+
+        .photo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .photo-item {
+            width: 320px;
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(2px);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            border: 1px solid cyan;
+            border-radius: 10px;
+        }
+        
+        .photo-caption {
+            font-size: 1em;
+            color: black;
+            margin-top: 8px;
+        }
+      /* video page*/
+        #video-page {
+            font-family: 'Pyidaungsu', Arial, sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('01.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat:no-repeat;
+            background-attachment:fixed;
+            color: gold;
+            padding-top: 50px;
+            flex-grow: 1;
+        }
+        .video-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .video-item {
+            width: 320px;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(2px);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            color: white;
+        }
+        .video-item video {
+            width: 100%;
+            height: auto;
+            border: 1px solid cyan;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="home1.mp4" type="video/mp4">
+    </video>  
+    
+    <div class="navbar hidden" id="global-navbar">
+        <div id="menu" class="menu-list">
+            <a href="#" class="active" data-page="main-menu-page">Home</a>
+            <a href="#" data-page="detail-page">Letter</a>
+            <a href="#" data-page="album-page">Album</a>
+            <a href="#" data-page="music-page">Music</a>
+            <a href="#" data-page="video-page">Video</a>
+        </div>
+        <button id="logoutBtn" class="btn-logout">Logout</button>
+    </div>
+
+    <div id="login-page">
+        <form id="loginForm" autocomplete="off">
+            <div class="card">
+                <span class="heart-icon">❤️</span>
+                <input id="loginInput" type="text" class="input" placeholder="Username" required/>
+                <div class="password-wrapper">
+                    <input id="passwordInput" type="password" class="input" placeholder="Password" required/> 
+                    <span id="toggleEye" class="toggle-eye">👁️</span>
+                </div>
+                <button type="submit" class="button">Login</button>
+                <div class="msg" id="msg"></div>
+            </div>
+        </form>
+    </div>
+
+    <div id="main-menu-page" class="hidden">
+        <p> ကျနော့်ရဲ့ website မှကြိုဆိုပါတယ်။</p>
+        <p> menu bar မှ item တစ်ခုဆီနှိပ်ပြီး ဝင်ကြည့်နိုင်ပါတယ်။</p>
+        <span class="heart-icon">❤️</span>
+    </div>
+    
+    <div id="detail-page" class="hidden">
+        <header>
+            <h2> သို့..ချစ်ရပါသော</h2>
+        </header>
+        
+        <section id="home">
+            <h1>ကောင်မလေးရေ</h1>
+            <span class="heart-icon" style="margin-top: 30px;">❤️</span>
+        </section>
+      
+        <section id="categories">
+            <div class="year-box">
+                <h3>ရင်ထဲက ပထမဆုံးစကား</h3>
+                <p> ဒီစာလေးကိုဖတ်တဲ့အခါ မင်းရဲ့မျက်နှာလေးမှာ အပြုံးပန်းတွေ ပွင့်စေချင်တယ်။ မင်းက ငါ့ဘဝရဲ့ အလှပဆုံးသော အလင်းရောင်ပါပဲ။ မင်းနဲ့အတူရှိတဲ့ နေ့ရက်တိုင်းဟာ ငါ့အတွက်တော့ အဓိပ္ပာယ်ရှိတဲ့ အကောင်းဆုံးအချိန်တွေပါ။ မင်းရဲ့ နွေးထွေးတဲ့ အပြုံး၊ ရိုးသားတဲ့စိတ်ထားတွေကြောင့် ငါအမြဲတမ်း ပျော်ရွှင်ရတယ်။ ချစ်ခြင်းမေတ္တာဆိုတာ စကားလုံးတွေထက် ပိုတယ်ဆိုတာ မင်းသိပါတယ်။ ဒါပေမဲ့ 'ချစ်တယ်' ဆိုတဲ့ စကားလုံးက ငါ့ရင်ထဲက အချစ်တွေကို ဖော်ပြဖို့ အခက်ဆုံးဖြစ်နေလို့ ဒီစာမျက်နှာလေး ဖန်တီးလိုက်တာပါ။</p>
+            </div>
+
+            <div class="year-box">
+                <h3>အချစ်ရဲ့ အဓိပ္ပာယ်</h3>
+                <p>ချစ်ခြင်းဆိုတာ စက္ကန့်တိုင်း ရင်ခုန်နေတာမျိုးပါပဲ။ အဲဒီ ရင်ခုန်သံတိုင်းမှာ မင်းရဲ့ နာမည်ပဲ ရှိတယ်။ မင်းက ငါ့ရဲ့ အချစ်ဆုံးသူငယ်ချင်း၊ ငါ့ရဲ့အိမ်၊ ငါ့ရဲ့အနာဂတ်... အရာရာအားလုံး ဖြစ်လို့နေတယ်။ ငါတို့အတူတူရှိနေရင် ဘဝက အရောင်အသွေးစုံလင်နေတာပဲ။</p>
+            </div>
+
+            <div class="year-box">
+                <h3>ထာဝရ ကတိ</h3>
+                <p>မင်းရဲ့ ဘေးနားမှာ အမြဲတမ်းရှိနေပေးမယ်လို့ ကတိပေးပါတယ်။ ဘယ်လို အခက်အခဲပဲကြုံပါစေ၊ မင်းလက်ကို မြဲမြဲဆုပ်ကိုင်ပြီး အတူတူ ဖြတ်ကျော်သွားကြမယ်။ ငါ မင်းကို အမြဲတမ်း ပျော်ရွှင်အောင် ထားချင်တယ်။ အမြဲတမ်းချစ်နေပါ့မယ် အချစ်ဆုံးလေး။ မင်းက ငါ့ဘဝထဲမှာ ကြယ်လို လင်းလက်နေတာ ကြောင့် ငါ့ရဲ့ နေ့ရက်တိုင်းဟာ မှောင်မိုက်ခြင်းကင်းပြီး အဓိပ္ပာယ်တွေ ပြည့်နေခဲ့တာပါ။ မင်းမရှိတဲ့ ကမ္ဘာကြီးကို ငါဘယ်လိုမှ စိတ်ကူးမယဉ်နိုင်ဘူး။ မင်းကို ဘယ်လောက်ထိ ချစ်တယ်ဆိုတာ စကားလုံးတွေနဲ့ ဖော်ပြဖို့ ခက်ပါတယ်။ မင်းက ငါ့ဘဝထဲကို ဝင်ရောက်လာတဲ့ နေ့ကစပြီး ငါ့ရဲ့ နေ့ရက်တိုင်းဟာ ပိုပြီး အဓိပ္ပာယ်ရှိလာခဲ့တယ်။ မင်းရဲ့ အပြုံးလေးတွေ၊ ရယ်မောသံလေးတွေနဲ့ နွေးထွေးတဲ့ စိတ်ထားတွေအတွက် ငါ အမြဲတမ်း ကျေးဇူးတင်နေမိတယ်။</p>
+                <p style="margin-top:20px;">ထာဝရအတွက် မင်းကိုချစ်နေမယ်</p>
+                <p>** I love you, now and forever. **</p>
+                
+                <p style="text-align: right; color: cyan; font-weight:bold;">မင်းကို အမြဲချစ်နေမယ့်</p>
+                <p style="text-align: right; color: cyan; font-weight:bold;">ဇော်မျိုးအောင်</p>
+            </div>
+            
+            <p class="bar" style="margin-top: 50px; height: 5px; background: green; border-radius: 5px;"></p>
+            
+            <div class="back-link-card">
+                <p style="text-align: center; color: cyan; font-weight:bold;">ချစ်ရသူရဲ့မေတ္တာစကားကိုစောင့်မျှော်လျှက်။</p>
+            </div>
+    </div>
+    
+    <audio id="detail-audio" src="CC.mp3" preload="auto" loop></audio>
+
+    <div id="album-page" class="hidden">
+        <h1 class="album-header">ချစ်ရသူလေးရဲ့ အမှတ်တရ ဓာတ်ပုံများ</h1>
+        <div class="photo-grid">
+            <div class="photo-item">
+                <img src="albam01.png" alt="သူမရဲ့ အပြုံး">
+                <p class="photo-caption">မင်းရဲ့ ပထမဆုံး အပြုံးလေးကို မြင်ရတဲ့နေ့။</p>
+            </div>
+            <div class="photo-item">
+                <img src="albam02.png" alt="အတူရှိခဲ့တဲ့ နေရာ">
+                <p class="photo-caption">ငါတို့ အတူတူ သွားခဲ့တဲ့ ခရီးလေးရဲ့ အမှတ်တရ။</p>
+            </div>
+            <div class="photo-item">
+                <img src="albam03.png" alt="အလှဆုံးဓာတ်ပုံ">
+                <p class="photo-caption">မင်းကို အလှဆုံးလို့ မြင်ရတဲ့ ပုံလေး။</p>
+            </div>
+            <div class="photo-item">
+                <img src="albam04.jpg" alt="ချစ်ရတဲ့ပုံ">
+                <p class="photo-caption">ဒီပုံလေးက ငါ့အချစ်ဆုံး။</p>
+            </div>
+            <div class="photo-item">
+                <img src="albam05.png" alt="ချစ်ရတဲ့ပုံ">
+                <p class="photo-caption">ဒီပုံလေးက ငါ့အချစ်ဆုံး။</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="music-page" class="hidden">
+        <div class="container">
+            <h1 style="font-size:1.3em;">My Love Playlist</h1>
+            <div class="playlistContainer"></div>
+            
+            <audio src="" class="audioTag" preload="auto"></audio>
+
+            <div class="currentAndTotlTime">00:00 / 00:00</div> 
+            
+            <div id="progressBar">
+                <div id="currentProgress"></div>   
+            </div>
+            
+            <div class="musicPlayer">
+                <i class="fas fa-step-backward controls previousButton"></i>
+                <i class="fas fa-play-circle controls playButton"></i>
+                <i class="fas fa-pause-circle controls pauseButton"></i>
+                <i class="fas fa-step-forward controls nextButton"></i>
+            </div>
+            <div class="volumeControl">
+                <i class="fas fa-volume-up volumeIcon" id="volumeIcon"></i> 
+                <input type="range" id="volumeSlider" min="0" max="100" value="50">
+            </div>
+        </div>
+    </div>
+    
+    <div id="video-page" class="hidden">
+        <h1 class="album-header" style="color: white; font-size: 1em;">💕 ချစ်သူနဲ့ အမှတ်တရ ဗီဒီယိုများ 💕</h1>
+        <div class="video-grid">
+            <div class="video-item">
+                <video src="vd01.mp4" controls data-video-id="vd01" onplay="stopOtherVideos('vd01')"></video>
+                <p class="photo-caption" style="color: white;">ပထမဆုံး Date ရဲ့ ဗီဒီယို။</p>
+            </div>
+            <div class="video-item">
+                <video src="vd02.mp4" controls data-video-id="vd02" onplay="stopOtherVideos('vd02')"></video>
+                <p class="photo-caption" style="color: white;">အမှတ်တရ ခရီးစဉ်လေး။</p>
+            </div>
+            <div class="video-item">
+                <video src="vd03.mp4" controls data-video-id="vd03" onplay="stopOtherVideos('vd03')"></video>
+                <p class="photo-caption" style="color: white;">အမှတ်တရ ခရီးစဉ်လေး။</p>
+            </div>
+            <div class="video-item">
+                <video src="vd04.mp4" controls data-video-id="vd04" onplay="stopOtherVideos('vd04')"></video>
+                <p class="photo-caption" style="color: white;">အမှတ်တရ ခရီးစဉ်လေး။</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pages = ['login-page', 'main-menu-page', 'detail-page', 'album-page', 'music-page', 'video-page'];
+        const globalNavbar = document.getElementById('global-navbar');
+        const loginForm = document.getElementById('loginForm');
+        const loginInput = document.getElementById('loginInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const msg = document.getElementById('msg');
+        const logoutButton = document.getElementById('logoutBtn');
+        const toggleEye = document.getElementById('toggleEye');
+        const menuLinks = document.querySelectorAll('.menu-list a');
+        const bgVideo = document.getElementById('bg-video'); 
+        const detailAudio = document.getElementById('detail-audio');
+        const videoElements = document.querySelectorAll('#video-page video');
+        
+        // Music Player Elements
+        const audioTag = document.getElementsByClassName("audioTag")[0];
+        const playListContainerTag = document.getElementsByClassName("playlistContainer")[0];
+        const currentAndTotlTimeTag = document.getElementsByClassName("currentAndTotlTime")[0]; 
+        const currentProgressTag = document.getElementById("currentProgress");
+        const progressBarTag = document.getElementById("progressBar");
+        const playButtonTag = document.getElementsByClassName("playButton")[0];
+        const pauseButtonTag = document.getElementsByClassName("pauseButton")[0];
+        const previousButtonTag = document.getElementsByClassName("previousButton")[0];
+        const nextButtonTag = document.getElementsByClassName("nextButton")[0];
+        const volumeSliderTag = document.getElementById("volumeSlider");
+        const volumeIconTag = document.getElementById("volumeIcon");
+
+        const credentials = { "zawmyoaung" : "zaw@7" };
+
+        const tracks = [
+            { trackId: "ayemyaphyu.mp3", title: "နှစ်ဦးသစ္စာ - အေးမြဖြူ"},
+            { trackId: "letter-i.mp3", title: "Letter i - Zenith"},
+            { trackId: "phyogyi.mp3", title: "သူသိပါကွယ် - ဖြိုးကြီး"},
+            { trackId: "music/manaw1.mp3", title:"နွယ်ညို - မနော"},
+            { trackId: "music/manaw2.mp3", title: "ကြာဖြူ - မနော"},
+            { trackId: "music/yoon1.mp3", title: "အဆင်ပြေမနေဘူး - ယွန်းမြတ်သူ"},
+            { trackId: "music/joelay.mp3", title: "သို့ အတိတ်က - Joe Lay"},
+            { trackId: "music/may1.mp3", title:"မျတ်ဝန်းမှတဆင့် - မေသတ်ထားဆွေ "},
+            { trackId: "music/may2.mp3", title:"နိမိတ်ကောင်းမင်္ဂလာ - မေသတ်ထားဆွေ"},
+            { trackId: "music/AB.mp3", title: "မင်းကြောင့် - နန်းစုရတီစိုး" },
+            { trackId: "music/AA.mp3", title:" မိုးတွေရွာတိုင်းမျက်ရည်ဝိုင်း - ဟန်ထူးစျန်" },
+            { trackId: "music/BB.mp3", title: "အညာပုံပြင် - ဖော်ဝေး" },
+            { trackId: "music/CC.mp3", title:"အချစ်စစ်ရဲ့တန်ဖိုး - မနော" },
+            { trackId: "music/DD.mp3", title: "ကိုယ်လာရင်ကြိုမှာလား - ဟန်ထူးစျာန်"}
+        ];
+        let currentTrackIndex = 0;
+
+        // --- Navigation & Back Button Control ---
+
+        function showPage(pageId) {
+            pages.forEach(id => {
+                const p = document.getElementById(id);
+                if (p) p.classList.add('hidden');
+            });
+            document.getElementById(pageId).classList.remove('hidden');
+
+            if (pageId === 'login-page') {
+                globalNavbar.classList.add('hidden');
+                if (window.location.hash !== "") {
+                    history.replaceState(null, "", window.location.pathname);
+                }
+            } else {
+                globalNavbar.classList.remove('hidden');
+                if (window.location.hash !== "#active") {
+                    history.pushState({ loggedIn: true }, "", "#active");
+                }
+            }
+
+            // Reset media on page change
+            audioTag.pause();
+            if (detailAudio) { 
+                detailAudio.pause(); 
+                detailAudio.currentTime = 0; 
+            }
+            if (pageId === 'detail-page' && detailAudio) { 
+                detailAudio.play().catch(e => console.log("Audio blocked")); 
+            }
+            if (bgVideo) {
+                if (pageId === 'main-menu-page') { 
+                    bgVideo.classList.remove('hidden'); 
+                    bgVideo.play(); 
+                } else { 
+                    bgVideo.pause(); 
+                    bgVideo.classList.add('hidden'); 
+                }
+            }
+            if (pageId !== 'video-page') { 
+                videoElements.forEach(v => v.pause()); 
+            }
+
+            menuLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) link.classList.add('active');
+            });
+        }
+
+        window.addEventListener('popstate', (event) => {
+            const isLoggedIn = sessionStorage.getItem('loggedInUser');
+            if (isLoggedIn) {
+                const confirmLogout = confirm("အကောင့်ထဲမှ ထွက်မှာလား (Logout)?");
+                if (confirmLogout) {
+                    logout();
+                } else {
+                    history.pushState({ loggedIn: true }, "", "#active");
+                }
+            }
+        });
+
+        function logout() {
+            sessionStorage.removeItem('loggedInUser');
+            showPage('login-page');
+        }
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = loginInput.value.trim();
+            const pass = passwordInput.value;
+            if (credentials[user] === pass) {
+                sessionStorage.setItem('loggedInUser', user);
+                showPage('main-menu-page');
+            } else {
+                msg.textContent = 'Username သို့မဟုတ် password မှားနေပါသည်။';
+            }
+        });
+
+        logoutButton.addEventListener('click', logout);
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage(link.getAttribute('data-page'));
+            });
+        });
+
+        toggleEye.addEventListener('click', () => {
+            const isPass = passwordInput.type === 'password';
+            passwordInput.type = isPass ? 'text' : 'password';
+            toggleEye.textContent = isPass ? '🙈' : '👁️';
+        });
+
+        // --- Music Player Logic ---
+
+        const calculateTime = (time) => {
+            const minutes = Math.floor(time / 60);
+            const seconds = Math.floor(time % 60);
+            return (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+        };
+
+        const updatePlayPauseButton = () => {
+            if (audioTag.paused) {
+                playButtonTag.style.display = "inline-block";
+                pauseButtonTag.style.display = "none";
+            } else {
+                playButtonTag.style.display = "none";
+                pauseButtonTag.style.display = "inline-block";
+            }
+        };
+
+        const highlightActiveTrack = () => {
+            const trackItems = document.querySelectorAll(".trackItem");
+            trackItems.forEach((item, index) => {
+                item.classList.toggle("activeTrack", index === currentTrackIndex);
+            });
+        };
+
+        const playTrack = (index) => {
+            currentTrackIndex = index;
+            audioTag.src = tracks[currentTrackIndex].trackId;
+            highlightActiveTrack();
+        };
+
+        const playNext = () => {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            playTrack(currentTrackIndex);
+            audioTag.play();
+        };
+
+        const playPrevious = () => {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            playTrack(currentTrackIndex);
+            audioTag.play();
+        };
+
+        // Initialize Playlist
+        tracks.forEach((track, i) => {
+            const trackTag = document.createElement("div");
+            trackTag.classList.add("trackItem");
+            trackTag.textContent = (i + 1) + ". " + track.title;
+            trackTag.addEventListener("click", () => {
+                playTrack(i);
+                audioTag.play();
+            });
+            playListContainerTag.append(trackTag);
+        });
+
+        playButtonTag.addEventListener("click", () => audioTag.play());
+        pauseButtonTag.addEventListener("click", () => audioTag.pause());
+        nextButtonTag.addEventListener("click", playNext);
+        previousButtonTag.addEventListener("click", playPrevious);
+
+        audioTag.addEventListener("play", updatePlayPauseButton);
+        audioTag.addEventListener("pause", updatePlayPauseButton);
+        audioTag.addEventListener("ended", playNext);
+
+        audioTag.addEventListener("timeupdate", () => {
+            const currentTimeText = calculateTime(audioTag.currentTime);
+            const totalTimeText = calculateTime(audioTag.duration || 0);
+            currentAndTotlTimeTag.textContent = currentTimeText + " / " + totalTimeText;
+            currentProgressTag.style.width = ((audioTag.currentTime / audioTag.duration) * 100) + "%";
+        });
+
+        progressBarTag.addEventListener("click", (e) => {
+            const percentage = e.offsetX / progressBarTag.clientWidth;
+            audioTag.currentTime = percentage * audioTag.duration;
+        });
+
+        volumeSliderTag.addEventListener('input', () => {
+            audioTag.volume = volumeSliderTag.value / 100;
+        });
+
+        function stopOtherVideos(id) {
+            videoElements.forEach(v => { 
+                if(v.getAttribute('data-video-id') !== id) v.pause(); 
+            });
+        }
+
+        // --- Start App ---
+        if (sessionStorage.getItem('loggedInUser')) {
+            showPage('main-menu-page');
+            playTrack(0);
+        } else {
+            showPage('login-page');
+            playTrack(0);
+        }
+    </script>
+</body>
+</html>
