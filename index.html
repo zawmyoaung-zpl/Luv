@@ -804,14 +804,13 @@
 
         const updatePlayPauseButton = () => {
             if (audioTag.paused) {
-                playButtonTag.style.display = "inline-block";
-                pauseButtonTag.style.display = "none";
+                if(playButtonTag) playButtonTag.style.display = "inline-block";
+                if(pauseButtonTag) pauseButtonTag.style.display = "none";
             } else {
-                playButtonTag.style.display = "none";
-                pauseButtonTag.style.display = "inline-block";
+                if(playButtonTag) playButtonTag.style.display = "none";
+                if(pauseButtonTag) pauseButtonTag.style.display = "inline-block";
             }
         };
-
         const highlightActiveTrack = () => {
             const trackItems = document.querySelectorAll(".trackItem");
             trackItems.forEach((item, index) => {
