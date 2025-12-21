@@ -802,7 +802,7 @@
             return (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
         };
 
-        const updatePlayPauseButton = () => {
+                const updatePlayPauseButton = () => {
             if (audioTag.paused) {
                 if(playButtonTag) playButtonTag.style.display = "inline-block";
                 if(pauseButtonTag) pauseButtonTag.style.display = "none";
@@ -811,82 +811,151 @@
                 if(pauseButtonTag) pauseButtonTag.style.display = "inline-block";
             }
         };
-        const highlightActiveTrack = () => {
-            const trackItems = document.querySelectorAll(".trackItem");
-            trackItems.forEach((item, index) => {
-                item.classList.toggle("activeTrack", index === currentTrackIndex);
-            });
-        };
 
         const playTrack = (index) => {
             currentTrackIndex = index;
-            audioTag.src = tracks[currentTrackIndex].trackId;
+            const trackId = tracks[currentTrackIndex].trackId;
+            audioTag.src = trackId;
             highlightActiveTrack();
         };
-
+        const highlightActiveTrack = () => {
+            const trackItems = document.querySelectorAll("#music-page .trackItem");
+            trackItems.forEach((item, index) => {
+                item.classList.remove("activeTrack");
+                if (index === currentTrackIndex) {
+                    item.classList.add("activeTrack");
+                }
+            });
+        };
+        
         const playNext = () => {
             currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
             playTrack(currentTrackIndex);
-            audioTag.play();
+            audioTag.play(); 
         };
 
         const playPrevious = () => {
-            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length; 
             playTrack(currentTrackIndex);
-            audioTag.play();
+            audioTag.play(); 
         };
+        
+        const updateVolumeIcon = (volumeLevel) => {
+            if(!volumeIconTag) return;
+            volumeIconTag.className = 'fas volumeIcon'; 
+            
+            if (audioTag.muted || volumeLevel === 0) {
+                volumeIconTag.classList.add('fa-volume-mute');
+            } else if (volumeLevel > 0.5) {
+                volumeIconTag.classList.add('fa-volume-up');
+            } else if (volumeLevel > 0) {
+                volumeIconTag.classList.add('fa-volume-down');
+            }
+        };
+        
+        if (playListContainerTag) {
+            for (let i = 0; i < tracks.length; i++) {
+                const trackTag = document.createElement("div");
+                trackTag.classList.add("trackItem");
 
-        // Initialize Playlist
-        tracks.forEach((track, i) => {
-            const trackTag = document.createElement("div");
-            trackTag.classList.add("trackItem");
-            trackTag.textContent = (i + 1) + ". " + track.title;
-            trackTag.addEventListener("click", () => {
-                playTrack(i);
-                audioTag.play();
+                const title = (i + 1).toString() + ". " + tracks[i].title; 
+                trackTag.textContent = title;
+                
+                trackTag.addEventListener("click", () => {
+                    playTrack(i);
+                    audioTag.play(); 
+                });
+                playListContainerTag.append(trackTag);
+            }
+        }
+
+        if (playButtonTag) playButtonTag.addEventListener("click", () => audioTag.play());
+        if (pauseButtonTag) pauseButtonTag.addEventListener("click", () => audioTag.pause());
+        if (nextButtonTag) nextButtonTag.addEventListener("click", playNext);
+        if (previousButtonTag) previousButtonTag.addEventListener("click", playPrevious);
+        
+        if (audioTag) {
+            audioTag.addEventListener("play", updatePlayPauseButton);
+            audioTag.addEventListener("pause", updatePlayPauseButton);
+
+            audioTag.addEventListener("loadedmetadata", () => {
+                if (currentAndTotlTimeTag) {
+                    const totalTime = calculateTime(audioTag.duration);
+                    currentAndTotlTimeTag.textContent = "00:00 / " + totalTime; 
+                }
             });
-            playListContainerTag.append(trackTag);
-        });
 
-        playButtonTag.addEventListener("click", () => audioTag.play());
-        pauseButtonTag.addEventListener("click", () => audioTag.pause());
-        nextButtonTag.addEventListener("click", playNext);
-        previousButtonTag.addEventListener("click", playPrevious);
+            audioTag.addEventListener("timeupdate", () => {
+                const currentTime = audioTag.currentTime;
+                const duration = audioTag.duration;
+                
+                const currentTimeText = calculateTime(currentTime);
+                const totalTimeText = calculateTime(duration);
 
-        audioTag.addEventListener("play", updatePlayPauseButton);
-        audioTag.addEventListener("pause", updatePlayPauseButton);
-        audioTag.addEventListener("ended", playNext);
+                if (currentAndTotlTimeTag) currentAndTotlTimeTag.textContent = currentTimeText + " / " + totalTimeText;
 
-        audioTag.addEventListener("timeupdate", () => {
-            const currentTimeText = calculateTime(audioTag.currentTime);
-            const totalTimeText = calculateTime(audioTag.duration || 0);
-            currentAndTotlTimeTag.textContent = currentTimeText + " / " + totalTimeText;
-            currentProgressTag.style.width = ((audioTag.currentTime / audioTag.duration) * 100) + "%";
-        });
+                const currentProgress = (currentTime / duration) * 100;
+                if (currentProgressTag) currentProgressTag.style.width = currentProgress + "%";
+            });
 
-        progressBarTag.addEventListener("click", (e) => {
-            const percentage = e.offsetX / progressBarTag.clientWidth;
-            audioTag.currentTime = percentage * audioTag.duration;
-        });
+            audioTag.addEventListener("ended", playNext); 
 
-        volumeSliderTag.addEventListener('input', () => {
-            audioTag.volume = volumeSliderTag.value / 100;
-        });
-
-        function stopOtherVideos(id) {
-            videoElements.forEach(v => { 
-                if(v.getAttribute('data-video-id') !== id) v.pause(); 
+            audioTag.volume = (volumeSliderTag && volumeSliderTag.value) ? volumeSliderTag.value / 100 : 0.5;
+            updateVolumeIcon(audioTag.volume);
+            
+            audioTag.addEventListener('volumechange', () => {
+                if (volumeSliderTag) {
+                    if (!audioTag.muted) {
+                        volumeSliderTag.value = audioTag.volume * 100;
+                    }
+                }
+                updateVolumeIcon(audioTag.volume); 
+            });
+        }
+        
+        if (progressBarTag) {
+            progressBarTag.addEventListener("click", (e) => {
+                const progressBarWidth = progressBarTag.clientWidth;
+                const clickX = e.offsetX; 
+                
+                const percentage = (clickX / progressBarWidth); 
+                
+                if (!isNaN(audioTag.duration) && isFinite(audioTag.duration)) {
+                    audioTag.currentTime = percentage * audioTag.duration;
+                }
             });
         }
 
-        // --- Start App ---
-        if (sessionStorage.getItem('loggedInUser')) {
-            showPage('main-menu-page');
-            playTrack(0);
-        } else {
-            showPage('login-page');
-            playTrack(0);
+        if (volumeSliderTag) {
+            volumeSliderTag.addEventListener('input', () => {
+                const newVolume = volumeSliderTag.value / 100;
+                audioTag.muted = false;
+                audioTag.volume = newVolume;
+                updateVolumeIcon(newVolume);
+            });
         }
+
+        if (volumeIconTag) {
+            volumeIconTag.addEventListener('click', () => {
+                audioTag.muted = !audioTag.muted;
+                if (!audioTag.muted && volumeSliderTag) {
+                    audioTag.volume = volumeSliderTag.value / 100;
+                }
+                updateVolumeIcon(audioTag.volume); 
+            });
+        }
+        
+        if (tracks.length > 0 && audioTag) {
+            playTrack(0);
+            audioTag.pause();
+            updatePlayPauseButton();
+        }
+
+        if (bgVideo) {
+            bgVideo.classList.add('hidden');
+        }
+
+        initApp();
     </script>
 </body>
 </html>
