@@ -954,7 +954,22 @@
         if (bgVideo) {
             bgVideo.classList.add('hidden');
         }
+            function stopOtherVideos(currentVideoId) {
+            videoElements.forEach(video => {
+                if (video.getAttribute('data-video-id') !== currentVideoId) {
+                    video.pause();
+                }
+            });
+        }
+        
+        function stopAllVideos() {
+             videoElements.forEach(video => {
+                video.pause();
+            });
+        }
 
+        function handleVideoPause(videoElement) {
+        }
         initApp();
     </script>
 </body>
